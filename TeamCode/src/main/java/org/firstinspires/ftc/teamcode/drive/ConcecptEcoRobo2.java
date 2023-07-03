@@ -151,7 +151,11 @@ public class ConcecptEcoRobo2 extends LinearOpMode {
     }
     public void EncoderPower(double dist, double power, char heading)
     {
+        // 1 thick = 1/537.5 * 1 Motor Rotation
+        // Wheel Diameter = 9.6 cm
+        // Pi = 3.1415
         int tick1 = (int) (dist*537.7/9.6/3.1415);
+
         int ss=0,ds=0,df=0,sf=0;
         if (heading=='b')
         {
