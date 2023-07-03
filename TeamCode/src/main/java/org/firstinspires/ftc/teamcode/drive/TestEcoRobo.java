@@ -7,9 +7,12 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
 @TeleOp(name="EcoRobo")
@@ -23,6 +26,7 @@ public class TestEcoRobo extends LinearOpMode {
     private AnalogInput anal2;
     private AnalogInput anal3;
     private AnalogInput anal4;
+    private DistanceSensor dist;
     public int pos=0;
     boolean slow=false;
     @Override
@@ -37,9 +41,9 @@ public class TestEcoRobo extends LinearOpMode {
         anal2=hardwareMap.get(AnalogInput.class, "anal2");
         anal3=hardwareMap.get(AnalogInput.class, "anal3");
         anal4=hardwareMap.get(AnalogInput.class, "anal4");
+        dist = hardwareMap.get(DistanceSensor.class, "dist");
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        brat.setDirection(DcMotorSimple.Direction.REVERSE);
         brat.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         waitForStart();
         while (opModeIsActive()) {
@@ -68,7 +72,7 @@ public class TestEcoRobo extends LinearOpMode {
                 slow=true;
             if(gamepad1.left_bumper)
                 slow=false;
-            if(gamepad1.dpad_up && pos<=5000)
+            if(gamepad1.dpad_up)
             {
                     pos+=25;
                     sleep(20);
@@ -106,6 +110,7 @@ public class TestEcoRobo extends LinearOpMode {
             telemetry.addData("Anal2:", anal2.getVoltage());
             telemetry.addData("Anal3:", anal3.getVoltage());
             telemetry.addData("Anal4:", anal4.getVoltage());
+            telemetry.addData("Dist", dist.getDistance(DistanceUnit.CM));
             telemetry.update();
         }
     }

@@ -17,13 +17,13 @@ public class ResetServos extends LinearOpMode {
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
-        sd = hardwareMap.get(Servo.class, "sd");
-        ss = hardwareMap.get(Servo.class, "ss");
+        sd = hardwareMap.get(Servo.class, "gd");
+        ss = hardwareMap.get(Servo.class, "gs");
         cos = hardwareMap.get(Servo.class, "cos");
         waitForStart();
         while (opModeIsActive()) {
-            sd.setPosition(0.5);
-            ss.setPosition(0.6);
+            sd.setPosition(0.25);
+            ss.setPosition(0.8);
             if (gamepad1.a)
                 cos.setPosition(0.32);
             else if (gamepad1.b)
