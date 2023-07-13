@@ -56,6 +56,7 @@ public class ConcecptEcoRobo4 extends LinearOpMode {
                if(dist.getDistance(DistanceUnit.CM)<80 && !done)
                {
                    Stop_Reset();
+                   sleep(1000);
                    det=true;
                    detect();
                    Deseu();
@@ -201,17 +202,38 @@ public class ConcecptEcoRobo4 extends LinearOpMode {
     }
     public void Deseu ()
     {
-        while(dist.getDistance(DistanceUnit.CM)>5)
+        while(dist.getDistance(DistanceUnit.CM)>15)
         {
             Power_Heading(0.4,'f');
         }
-        dist_to_deseu=leftFront.getCurrentPosition()+200;
+        telemetry.addData("parcurs",dist_to_deseu);
+        telemetry.addData("Dist", dist.getDistance(DistanceUnit.CM));
+        telemetry.update();
+        dist_to_deseu=leftFront.getCurrentPosition();
         Stop_Reset();
         EncoderPower(4,0.2,'f');
         sd.setPosition(0.45);
         ss.setPosition(0.65);
-        brat.setTargetPosition(1200);
+        brat.setTargetPosition(1250);
         brat.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         brat.setPower(0.75);
+        while (brat.isBusy()) {
+            telemetry.addLine("L-am luat");
+            telemetry.update();
+        }
+        sd.setPosition(0.26);
+        ss.setPosition(0.79);
+        sleep(1000);
+        brat.setTargetPosition(0);
+        brat.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        brat.setPower(0.75);
+        while (brat.isBusy()) {
+            telemetry.addLine("L-am luat");
+            telemetry.addData("Mers", dist_to_deseu);
+            telemetry.update();
+        }
+        sleep(500);
+        EncoderPower(dist_to_deseu/537.7*9.6*3.1415,0.4, 'b');
+
     }
 }
