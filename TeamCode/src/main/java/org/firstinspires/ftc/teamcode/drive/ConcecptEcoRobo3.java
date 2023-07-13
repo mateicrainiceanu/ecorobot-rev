@@ -55,6 +55,10 @@ public class ConcecptEcoRobo3 extends LinearOpMode {
             sd.setPosition(0.25);
             ss.setPosition(0.79);
             while (opModeIsActive()) {
+
+                telemetry.addData("Detected", detectedGarbage);
+                telemetry.update();
+
                 diste=dist.getDistance(DistanceUnit.CM);
 
                 if (detectedGarbage == false) {
@@ -75,8 +79,6 @@ public class ConcecptEcoRobo3 extends LinearOpMode {
                     brat.setPower(0.75);
                     gotPickedUp = true;
                 }
-
-
 
                 telemetry.addLine(String.valueOf(diste));
                 telemetry.update();
@@ -161,12 +163,14 @@ public class ConcecptEcoRobo3 extends LinearOpMode {
         rightRear.setPower(power);
         rightFront.setPower(power);
         leftFront.setPower(power);
+
         while(leftFront.isBusy() && rightFront.isBusy() && rightRear.isBusy() && leftRear.isBusy())
         {
+            telemetry.addData("Dist", distanceSensor.getDistance(DistanceUnit.CM));
             if (!detectedGarbage && distanceSensor.getDistance(DistanceUnit.CM) < 80) {
+                Stop_Reset();
                 detect();
                 detectedGarbage = true;
-                Stop_Reset();
             } else if (detectedGarbage) { // detected garbage == t AND  distance is more than 80 cm
                 Double distance = distanceSensor.getDistance(DistanceUnit.CM);
                 if (distance < 20) {
