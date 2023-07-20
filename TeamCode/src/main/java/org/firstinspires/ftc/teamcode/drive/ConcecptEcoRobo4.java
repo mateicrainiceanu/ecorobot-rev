@@ -202,7 +202,7 @@ public class ConcecptEcoRobo4 extends LinearOpMode {
     }
     public void Deseu ()
     {
-        while(dist.getDistance(DistanceUnit.CM)>15)
+        while(dist.getDistance(DistanceUnit.CM)>25 && opModeIsActive())
         {
             Power_Heading(0.4,'f');
         }
@@ -210,6 +210,8 @@ public class ConcecptEcoRobo4 extends LinearOpMode {
         telemetry.addData("Dist", dist.getDistance(DistanceUnit.CM));
         telemetry.update();
         dist_to_deseu=leftFront.getCurrentPosition();
+        Stop_Reset();
+        sleep(500);
         Stop_Reset();
         EncoderPower(4,0.2,'f');
         sd.setPosition(0.45);
@@ -227,13 +229,14 @@ public class ConcecptEcoRobo4 extends LinearOpMode {
         brat.setTargetPosition(0);
         brat.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         brat.setPower(0.75);
-        while (brat.isBusy()) {
+        while (brat.isBusy() && opModeIsActive()) {
             telemetry.addLine("L-am luat");
-            telemetry.addData("Mers", dist_to_deseu);
+            telemetry.addData("Mers", ((dist_to_deseu-100)/537.7)*9.6*3.1415);
             telemetry.update();
         }
         sleep(500);
-        EncoderPower(dist_to_deseu/537.7*9.6*3.1415,0.4, 'b');
-
+        Stop_Reset();
+        EncoderPower(((dist_to_deseu-120)/537.7)*9.6*3.1415,0.4, 'b');
+        Stop_Reset();
     }
 }
