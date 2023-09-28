@@ -216,7 +216,7 @@ public class ConcecptEcoRobo4 extends LinearOpMode {
         EncoderPower(4,0.2,'f');
         sd.setPosition(0.45);
         ss.setPosition(0.65);
-        brat.setTargetPosition(1300);
+        brat.setTargetPosition(1250);
         brat.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         brat.setPower(0.75);
         while (brat.isBusy()) {
